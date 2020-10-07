@@ -17,29 +17,27 @@ import java.util.Optional;
 public class ORMController {
 
 	private final ORMService ormService;
-	private final ORMRepository repository;
 
 	@Autowired
-	public ORMController(ORMService ormService, ORMRepository repository) {
+	public ORMController(ORMService ormService) {
 		this.ormService = ormService;
-		this.repository = repository;
 	}
 
 
 	@GetMapping
 	public ResponseEntity<List<ORM>> findAllORMs() {
-		return ResponseEntity.ok(repository.findAll());
+		return ResponseEntity.ok(ormService.findAll());
 	}
 
 	@GetMapping("/orm/{name}")
 	public ResponseEntity<ORM> findORMByName(@PathVariable String name) {
-		Optional<ORM> orm = repository.findByName(name);
+		Optional<ORM> orm = ormService.findByName(name);
 		return orm.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.noContent().build());
 	}
 
 	@PostMapping
 	public ResponseEntity<ORM> createORM(@RequestBody ORM orm) {
-		ORM persistedORM = repository.save(orm);
+		ORM persistedORM = ormService.save(orm);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{name}")
 				.buildAndExpand(persistedORM.getId()).toUri();
 

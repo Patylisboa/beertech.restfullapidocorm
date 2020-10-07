@@ -1,22 +1,27 @@
 package com.beertech.kpoc.controllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.beertech.kpoc.entities.ORM;
+import com.beertech.kpoc.repositories.ORMRepository;
+import com.beertech.kpoc.services.ORMService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/orms")
 public class ORMController {
 
-
     private final ORMService ormService;
+    private final ORMRepository repository;
 
     @Autowired
-    public ORMController(ORMService ormService) {
+    public ORMController(ORMService ormService, ORMRepository repository) {
         this.ormService = ormService;
+        this.repository = repository;
     }
-	@Autowired
-	private ORMRepository repository;
-
 
 
 	@GetMapping
@@ -35,7 +40,7 @@ public class ORMController {
 		ORM persistedORM = repository.save(orm);
 		return ResponseEntity.ok(persistedORM);
 	}
-}
+
 
     @PutMapping("/{ormId}")
     public ORM update(@PathVariable Long ormId, @RequestBody ORM ormToUpdate) {

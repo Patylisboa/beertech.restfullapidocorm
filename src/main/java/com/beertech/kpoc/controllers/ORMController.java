@@ -6,7 +6,10 @@ import com.beertech.kpoc.services.ORMService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.xml.ws.Response;
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,42 +17,45 @@ import java.util.Optional;
 @RequestMapping("/orms")
 public class ORMController {
 
-    private final ORMService ormService;
-    private final ORMRepository repository;
+	private final ORMService ormService;
+	private final ORMRepository repository;
 
-    @Autowired
-    public ORMController(ORMService ormService, ORMRepository repository) {
-        this.ormService = ormService;
-        this.repository = repository;
-    }
+	@Autowired
+	public ORMController(ORMService ormService, ORMRepository repository) {
+		this.ormService = ormService;
+		this.repository = repository;
+	}
 
 
 	@GetMapping
-	public List<ORM> findAllORMs() {
-		return repository.findAll();
+	public ResponseEntity<List<ORM>> findAllORMs() {
+		return ResponseEntity.ok(repository.findAll());
 	}
 
 	@GetMapping("/orm/{name}")
-	public ORM findORMByName(@PathVariable String name) {
+	public ResponseEntity<ORM> findORMByName(@PathVariable String name) {
 		Optional<ORM> orm = repository.findByName(name);
-		return orm.get();
+		return orm.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.noContent().build());
 	}
 
 	@PostMapping("/orms")
 	public ResponseEntity<ORM> createORM(@RequestBody ORM orm) {
 		ORM persistedORM = repository.save(orm);
-		return ResponseEntity.ok(persistedORM);
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{name}")
+				.buildAndExpand(persistedORM.getId()).toUri();
+
+		return ResponseEntity.created(location).build();
 	}
 
 
-    @PutMapping("/{ormId}")
-    public ORM update(@PathVariable Long ormId, @RequestBody ORM ormToUpdate) {
-        return ormService.update(ormId, ormToUpdate);
-    }
+	@PutMapping("/{ormId}")
+	public ORM update(@PathVariable Long ormId, @RequestBody ORM ormToUpdate) {
+		return ormService.update(ormId, ormToUpdate);
+	}
 
-    @DeleteMapping("/{ormId}")
-    public ResponseEntity remove(@PathVariable Long ormId) {
-        ormService.remove(ormId);
-        return ResponseEntity.status(204).build();
-    }
+	@DeleteMapping("/{ormId}")
+	public ResponseEntity remove(@PathVariable Long ormId) {
+		ormService.remove(ormId);
+		return ResponseEntity.status(204).build();
+	}
 }

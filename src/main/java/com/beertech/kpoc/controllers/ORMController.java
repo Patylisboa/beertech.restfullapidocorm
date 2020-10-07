@@ -37,7 +37,7 @@ public class ORMController {
 		return orm.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.noContent().build());
 	}
 
-	@PostMapping("/orms")
+	@PostMapping
 	public ResponseEntity<ORM> createORM(@RequestBody ORM orm) {
 		ORM persistedORM = repository.save(orm);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{name}")

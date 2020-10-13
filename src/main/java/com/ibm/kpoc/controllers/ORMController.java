@@ -1,8 +1,9 @@
-package com.beertech.kpoc.controllers;
+package com.ibm.kpoc.controllers;
 
-import com.beertech.kpoc.entities.ORM;
-import com.beertech.kpoc.repositories.ORMRepository;
-import com.beertech.kpoc.services.ORMService;
+import com.ibm.kpoc.entities.ORM;
+import com.ibm.kpoc.repositories.ORMRepository;
+import com.ibm.kpoc.services.ORMService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

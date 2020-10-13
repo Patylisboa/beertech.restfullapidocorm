@@ -1,8 +1,9 @@
-package com.beertech.kpoc.services;
+package com.ibm.kpoc.services;
 
-import com.beertech.kpoc.entities.ORM;
-import com.beertech.kpoc.exceptions.NotFoundException;
-import com.beertech.kpoc.repositories.ORMRepository;
+import com.ibm.kpoc.entities.ORM;
+import com.ibm.kpoc.exceptions.NotFoundException;
+import com.ibm.kpoc.repositories.ORMRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

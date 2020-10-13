@@ -1,4 +1,4 @@
-package com.ibm.kpoc.exceptions;
+package com.beertech.kpoc.exceptions;
 
 public class NotFoundException extends RuntimeException {
 

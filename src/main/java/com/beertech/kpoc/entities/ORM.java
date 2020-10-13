@@ -1,4 +1,4 @@
-package com.ibm.kpoc.entities;
+package com.beertech.kpoc.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

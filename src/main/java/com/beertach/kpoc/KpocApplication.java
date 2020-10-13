@@ -1,4 +1,4 @@
-package com.ibm.kpoc;
+package com.beertach.kpoc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

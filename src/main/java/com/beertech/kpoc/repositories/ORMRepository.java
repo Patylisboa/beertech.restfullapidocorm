@@ -1,8 +1,8 @@
-package com.ibm.kpoc.repositories;
+package com.beertech.kpoc.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.ibm.kpoc.entities.ORM;
+import com.beertech.kpoc.entities.ORM;
 
 import java.util.Optional;
 
